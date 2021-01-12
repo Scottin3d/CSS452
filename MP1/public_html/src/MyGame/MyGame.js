@@ -24,18 +24,50 @@ function MyGame(htmlCanvasID) {
     // Step C1: Clear the canvas
     
     gEngine.Core.clearCanvas([0, 0.8, 0, 1]);
-    var color = [0, 0, 1, 1];
-    var offset = [0.1, 0];
-    var scale = [1, 1];
+    var color = [0, 0, 1, 0.1];
+    var offset = [-0.9, 0.5];
+    var scale = [0.1, 0.1];
     var count = 5;
     // Step C2: Activate the proper shader
     for (var i = 0; i < count; i++) {
-        this.mShader.activateShader(color, offset, scale);
-        offset[0] += 0.6;
+        this.mShader.activateShader(0, color, offset, scale);
+        scale = GetRand();
+        offset[0] += 0.3;
+        color[3] += .2;
     }
     
-
+    
+    // triangle
+    color = [1, 0, 0, 0.1];
+    offset = [-0.9, 0]
+    for (var i = 0; i < count; i++) {
+        this.mShader.activateShader(1, color, offset, scale);
+        scale = GetRand();
+        offset[0] += 0.3;
+        color[3] += .2;
+    }
+    
+    // circle
+    color = [0, 1, 0, 0.1];
+    offset = [-0.9, -0.5]
+    for (var i = 0; i < count; i++) {
+        this.mShader.activateShader(2, color, offset, scale);
+        scale = GetRand();
+        offset[0] += 0.3;
+        color[3] += .2;
+    }
+    
     // Step C3: Draw with the currently activated geometry and the activated shader
     var gl = gEngine.Core.getGL();
     //gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    
+    
 }
+
+function GetRand(){
+    var x = Math.random() * 0.3;
+    var y = Math.random() * 0.3;
+    return [x, y];
+    
+}
+

@@ -19,6 +19,8 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
     this.mCompiledShader = null;  // reference to the compiled shader in webgl context  
     this.mShaderVertexPositionAttribute = null; // reference to SquareVertexPosition within the shader
     this.mPixelColor = null;                    // reference to the pixelColor uniform in the fragment shader
+    this.mOffset = null;
+    this.mScale = null;
 
     var gl = gEngine.Core.getGL();
 
@@ -57,8 +59,8 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
 
     // Step G: Gets a reference to the uniform variable uPixelColor in the fragment shader
     this.mPixelColor = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
-    this.offset = gl.getUniformLocation(this.mCompiledShader, "uOffset");
-    this.scale = gl.getUniformLocation(this.mCompiledShader, "uScale");
+    this.mOffset = gl.getUniformLocation(this.mCompiledShader, "uOffset");
+    this.mScale = gl.getUniformLocation(this.mCompiledShader, "uScale");
 }
 //</editor-fold>
 
@@ -68,74 +70,65 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
 SimpleShader.prototype.getShader = function () { return this.mCompiledShader; };
 
 // Activate the shader for rendering
-SimpleShader.prototype.activateShader = function (pixelColor, offset, scale) {
-    
-    // for each shape
-    // // offset y
-        // for each count
-        // offset x
-    
+// param vertCount <int> - how many verts to use in gl.drawArrays
+SimpleShader.prototype.activateShader = function (shape, pixelColor, offset, scale) {
     var gl = gEngine.Core.getGL();
     
-    // Square
-    gl.useProgram(this.mCompiledShader);
-    gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
-    gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
-        3,              // each element is a 3-float (x,y.z)
-        gl.FLOAT,       // data type is FLOAT
-        false,          // if the content is normalized vectors
-        0,              // number of bytes to skip in between elements
-        0);             // offsets to the first element
-    gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
-    gl.uniform4fv(this.mPixelColor, pixelColor);
-    gl.uniform2fv(this.scale, scale);
-    gl.uniform2fv(this.offset, offset);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    
-    /*
-    var rowOffset = 0;
-    var rowScale = scale[0];
-    var count = 5;
-    for (var i = 0; i < count; i++) {
-        
-        // set offset and scale
-        gl.uniform2fv(this.offset, [rowOffset,0]);
-        //gl.uniform2fv(this.scale, [rowScale, 1]);
-        // draw object
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    switch (shape){
+        case 0:    
+            // Square
+            gl.useProgram(this.mCompiledShader);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
+            gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+                3,              // each element is a 3-float (x,y.z)
+                gl.FLOAT,       // data type is FLOAT
+                false,          // if the content is normalized vectors
+                0,              // number of bytes to skip in between elements
+                0);             // offsets to the first element
+            gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
 
-        // increment offsets
-        rowOffset += offset[0] + 0.1;
-        rowScale *= 1.1;
-    }
-    
-    rowOffset[0] = offset[0];
-    rowOffset[1] -= offset[1] + 0.1;
-    */
-   
-    // Triangle
-    gl.useProgram(this.mCompiledShader);
-    gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRefTriangle());
-    gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
-        3,              // each element is a 3-float (x,y.z)
-        gl.FLOAT,       // data type is FLOAT
-        false,          // if the content is normalized vectors
-        0,              // number of bytes to skip in between elements
-        0);             // offsets to the first element
-    gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
-    gl.uniform4fv(this.mPixelColor, pixelColor);
-    
-    for (var i = 0; i < count; i++) {
-        
-        // set offset and scale
-        gl.uniform2fv(this.offset, [rowOffset,0]);
-        //gl.uniform2fv(this.scale, [rowScale, 1]);
-        // draw object
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+            // set local variables
+            gl.uniform4fv(this.mPixelColor, pixelColor);
+            gl.uniform2fv(this.mScale, scale);
+            gl.uniform2fv(this.mOffset, offset);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            break;
+        case 1:
+            // Square
+            gl.useProgram(this.mCompiledShader);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRefTriangle());
+            gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+                3,              // each element is a 3-float (x,y.z)
+                gl.FLOAT,       // data type is FLOAT
+                false,          // if the content is normalized vectors
+                0,              // number of bytes to skip in between elements
+                0);             // offsets to the first element
+            gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
 
-        // increment offsets
-        rowOffset += offset[0] + 0.1;
-        rowScale *= 1.1;
+            // set local variables
+            gl.uniform4fv(this.mPixelColor, pixelColor);
+            gl.uniform2fv(this.mScale, scale);
+            gl.uniform2fv(this.mOffset, offset);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+            break;
+        case 2:
+            // Square
+            gl.useProgram(this.mCompiledShader);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLvertexRefCircle());
+            gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+                3,              // each element is a 3-float (x,y.z)
+                gl.FLOAT,       // data type is FLOAT
+                false,          // if the content is normalized vectors
+                0,              // number of bytes to skip in between elements
+                0);             // offsets to the first element
+            gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
+
+            // set local variables
+            gl.uniform4fv(this.mPixelColor, pixelColor);
+            gl.uniform2fv(this.mScale, scale);
+            gl.uniform2fv(this.mOffset, offset);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 9);
+            break;
     }
 };
 //-- end of public methods
