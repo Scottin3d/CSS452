@@ -109,7 +109,7 @@ SimpleShader.prototype.activateShader = function (shape, pixelColor, offset, sca
             gl.uniform4fv(this.mPixelColor, pixelColor);
             gl.uniform2fv(this.mScale, scale);
             gl.uniform2fv(this.mOffset, offset);
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
             break;
         case 2:
             // Square
@@ -127,7 +127,7 @@ SimpleShader.prototype.activateShader = function (shape, pixelColor, offset, sca
             gl.uniform4fv(this.mPixelColor, pixelColor);
             gl.uniform2fv(this.mScale, scale);
             gl.uniform2fv(this.mOffset, offset);
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 9);
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, 12);
             break;
     }
 };

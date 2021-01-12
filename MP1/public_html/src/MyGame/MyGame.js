@@ -25,7 +25,7 @@ function MyGame(htmlCanvasID) {
     
     gEngine.Core.clearCanvas([0, 0.8, 0, 1]);
     var color = [0, 0, 1, 0.1];
-    var offset = [-0.9, 0.5];
+    var offset = [-0.9, 0.75];
     var scale = [0.1, 0.1];
     var count = 5;
     // Step C2: Activate the proper shader
@@ -39,7 +39,7 @@ function MyGame(htmlCanvasID) {
     
     // triangle
     color = [1, 0, 0, 0.1];
-    offset = [-0.9, 0]
+    offset = [-0.9, 0.25]
     for (var i = 0; i < count; i++) {
         this.mShader.activateShader(1, color, offset, scale);
         scale = GetRand();
@@ -59,9 +59,6 @@ function MyGame(htmlCanvasID) {
     
     // Step C3: Draw with the currently activated geometry and the activated shader
     var gl = gEngine.Core.getGL();
-    //gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    
-    
 }
 
 function GetRand(){

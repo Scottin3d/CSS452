@@ -40,8 +40,8 @@ gEngine.VertexBuffer = (function () {
     var rootTwo = Math.sqrt(2);
     
     // circle
-    var verticesOfCircle = [
-        0,0,0,
+    var verticesOfCircle = null;
+    verticesOfCircle = [
         0, 1, 0,
         rootTwo / 2, rootTwo / 2, 0, 
         1, 0, 0,
@@ -50,25 +50,21 @@ gEngine.VertexBuffer = (function () {
         rootTwo / -2, rootTwo / -2, 0,
         -1, 0, 0,
         rootTwo / -2, rootTwo / 2, 0
-        
     ];
     
-    var vertices = null;
-    const totalPoints = 20;
+    const totalPoints = 12;
     var j = 0;
-    /*
-    for (let i = 0; i <= totalPoints; i++) {
-       const angle= 2 * Math.PI * i / totalPoints;
-       const x =  1 * Math.cos(angle);
-       const y =  1 * Math.sin(angle);
-       vertices.push(x, y);
-       vertices[j] = x;
-       vertices[j + 1] = y;
-       vertices[j + 2] = 0;
-       j += 3;
+    var delta = (2.0 * Math.PI)/ (totalPoints - 1);
+    for (var i = 1; i <= totalPoints; i++) {
+        var angle = (i - 1) * delta;
+        var x = 0.5 * Math.cos(angle);
+        var y = 0.5 * Math.sin(angle);
+        
+        verticesOfCircle[j++] = x;
+        verticesOfCircle[j++] = y;
+        verticesOfCircle[j++] = 0;
     }
-    */
-    
+
     var initialize = function () {
         // pass in a variable for shape?
         
