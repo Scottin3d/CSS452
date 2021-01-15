@@ -129,6 +129,42 @@ SimpleShader.prototype.activateShader = function (shape, pixelColor, offset, sca
             gl.uniform2fv(this.mOffset, offset);
             gl.drawArrays(gl.TRIANGLE_FAN, 0, 12);
             break;
+        case 3:
+            // Square
+            gl.useProgram(this.mCompiledShader);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLvertexRefCircle());
+            gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+                3,              // each element is a 3-float (x,y.z)
+                gl.FLOAT,       // data type is FLOAT
+                false,          // if the content is normalized vectors
+                0,              // number of bytes to skip in between elements
+                0);             // offsets to the first element
+            gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
+
+            // set local variables
+            gl.uniform4fv(this.mPixelColor, pixelColor);
+            gl.uniform2fv(this.mScale, scale);
+            gl.uniform2fv(this.mOffset, offset);
+            gl.drawArrays(gl.TRIANGLE_FAN, 2, 8);
+            break;
+        case 4:
+            // Square
+            gl.useProgram(this.mCompiledShader);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLvertexRefCircle());
+            gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+                3,              // each element is a 3-float (x,y.z)
+                gl.FLOAT,       // data type is FLOAT
+                false,          // if the content is normalized vectors
+                0,              // number of bytes to skip in between elements
+                0);             // offsets to the first element
+            gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
+
+            // set local variables
+            gl.uniform4fv(this.mPixelColor, pixelColor);
+            gl.uniform2fv(this.mScale, scale);
+            gl.uniform2fv(this.mOffset, offset);
+            gl.drawArrays(gl.TRIANGLE_FAN, 6, 12);
+            break;
     }
 };
 //-- end of public methods
