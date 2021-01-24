@@ -17,8 +17,8 @@ gEngine.GameLoop = (function () {
     // Variables for timing gameloop.
     var mPreviousTime = Date.now();
     var mLagTime;
-
-
+    
+    
     // The current loop state (running or should stop)
     var mIsLoopRunning = false;
 
@@ -27,7 +27,7 @@ gEngine.GameLoop = (function () {
     // This function assumes it is sub-classed from MyGame
     var _runLoop = function () {
         if (mIsLoopRunning) {
-            
+            var uperd = 0;
             // Step A: set up for next call to _runLoop and update input!
             requestAnimationFrame(function () { _runLoop.call(mMyGame); });
 
@@ -39,23 +39,27 @@ gEngine.GameLoop = (function () {
             
             var fps = 1000 / elapsedTime;
             
-            if(Date.now() - this.lastUpdate > 1000){
-                document.getElementById('fpsID').innerHTML = "FPS: " + fps.toFixed(0);
-                document.getElementById('lagID').innerHTML = "Lag Time: " + mLagTime.toFixed(2) + " ms";
-                document.getElementById('drawTimeID').innerHTML = "Time to update/ draw: " + (this.updateDrawEnd - this.updateDrawStart).toFixed(0) + " ms";
-                this.lastUpdate = Date.now();
-            } 
+            
             
             // Step C: Make sure we update the game the appropriate number of times.
             //      Update only every Milliseconds per frame.
             //      If lag larger then update frames, update until caught up.
-            this.updateDrawStart = Date.now();
+            
             while ((mLagTime >= kMPF) && mIsLoopRunning) {
                 gEngine.Input.update();
                 this.update();      // call MyGame.update()
+                uperd++;
                 mLagTime -= kMPF;
             }
-
+            
+            if(Date.now() - this.lastUpdate > 500){
+                document.getElementById('fpsID').innerHTML = "FPS: " + fps.toFixed(0);
+                document.getElementById('lagID').innerHTML = "Lag Time: " + mLagTime.toFixed(2) + " ms";
+                document.getElementById('drawTimeID').innerHTML = "Time to update/ draw: " + (this.updateDrawEnd - this.updateDrawStart).toFixed(0) + " ms";
+                document.getElementById('uperdID').innerHTML = "Number of Updates() Calls per Draw(): " + uperd;
+                this.lastUpdate = Date.now();
+            } 
+            this.updateDrawStart = Date.now();
             // Step D: now let's draw
             this.draw();    // Call MyGame.draw()
             this.updateDrawEnd = Date.now();

@@ -103,35 +103,39 @@ MyGame.prototype.update = function () {
     if(this.deleteMode){
         if(this.displayObjects.length < 2){
             this.deleteMode = ! this.deleteMode;
-            this.displayObjects.pop();
+            this.displayObjects.shift();
         }else{
             
-            var dt =  (this.displayObjects[this.displayObjects.length - 1].GetCreateTime() - (Date.now() - this.lastDelete)) / 1000;
-            var nextDelete = this.displayObjects[this.displayObjects.length - 1].GetCreateTime();
+            var dt =  (this.displayObjects[0].GetCreateTime() - (Date.now() - this.lastDelete)) / 1000;
+            var nextDelete = this.displayObjects[0].GetCreateTime();
            
             if(Date.now() - this.lastDelete > nextDelete){
                 this.lastDelete = Date.now();
-                this.displayObjects.pop();
+                this.displayObjects.shift();
             }
         }
+        document.getElementById('nextDID').innerHTML = "Next item deleted in: " + dt.toFixed(1) + " seconds";
+    }else{
+        document.getElementById('nextDID').innerHTML = "No items to deleted.";
     }
     
-    document.getElementById('nextDID').innerHTML = "Next item deleted in: " + dt;
+    
+    
     // delete mode
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.D)) {
         this.deleteMode = !this.deleteMode;
         this.lastDelete = Date.now();
-        this.displayObjects.pop();
+        this.displayObjects.shift();
     }
     
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
-        if(!this.deleteMode){
+        //if(!this.deleteMode){
             var createTime = Date.now() - this.lastCreated;
             this.lastCreated = Date.now();
             var n = new displayObject();
             n.Create(this.mConstColorShader, curserXform.getPosition(), createTime);
             this.displayObjects.push(n); 
-        }
+        //}
     }
     
     // TODO switch
