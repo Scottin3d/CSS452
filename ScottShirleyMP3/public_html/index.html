@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scott Shirley MP3</title>
+        <link rel ="icon" type ="image/x-icon" href="./assets/archer.png">
+
+        <!-- the following says there are javascript source code contained in 
+             the external source files
+        -->
+        <!-- external library -->
+        <script type="text/javascript" src="src/lib/gl-matrix.js"></script>
+
+        <!-- Engine code -->
+        <!-- Core of Engine --> 
+        <script type="text/javascript" src="src/Engine/Core/Engine_Core.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_VertexBuffer.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_GameLoop.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_Input.js"></script>
+        <!-- Resource support -->
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_ResourceMap.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_TextFileLoader.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_DefaultResources.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_AudioClips.js"></script>
+        <script type="text/javascript" src="src/Engine/Transform.js"></script>
+        <script type="text/javascript" src="src/Engine/Camera.js"></script>
+        <script type="text/javascript" src="src/Engine/SimpleShader.js"></script>
+        <script type="text/javascript" src="src/Engine/Renderable.js"></script>
+        <script type="text/javascript" src="src/Engine/Scene.js"></script>
+
+        <!-- Client game code -->
+        <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
+        <script type="text/javascript" src="src/MyGame/BlueLevel.js"></script>
+        <!-- Util -->
+        <script type="text/javascript" src="src/MyGame/Util/SceneFileParser.js"></script>
+        <!-- Scott's game code -->
+        <script type="application/json" src="assets/scene.json"></script>
+        <script>
+            function onLoad(){
+                
+        }
+    </script>
+    </head>
+    
+    
+    <body onload="var myGame = new MyGame(); 
+                gEngine.Core.initializeEngineCore('GLCanvas', myGame);"> 
+        <canvas id="GLCanvas" width="640" height="480" style="border:2px solid #118AB2; background-color: #073B4C;">
+            <!-- GLCanvas is the area we will draw in: a 640x480 area. -->
+            Your browser does not support the HTML5 canvas.
+            <!-- this message will show only if WebGL clearing failed -->
+        </canvas>
+        <div id="wrapper">
+            <div style="position: absolute; left: 10px; top: 10px; width:640px; height:20px; background-color: #118AB2;">
+                Small View Position X: <b><span id="cursorXID">t</span></b>  Y: <b><span id="cursorYID">t</span></b>
+            </div>
+            <div style="position: absolute; left: 15px; top: 30px; width:625px; height:20px; background-color: #06D6A0">
+                T: Toggle fast small view camera. Fast Mode: <b><span id="fastMode">t</span></b>
+            </div>
+            <div style="position: absolute; left: 15px; top: 50px; width:625px; height:20px; background-color: white">
+                White Box Position X: <b><span id="whiteXID">t</span></b>  Y: <b><span id="whiteYID">t</span></b>
+            </div>
+            <div style="color: white; position: absolute; left: 15px; top: 70px; width:625px; height:20px; background-color: #EF476F">
+                Red Box Rotation: <b><span id="redRotID">t</span></b>
+            </div>
+            <div style="color: white; position: absolute; left: 15px; top: 90px; width:625px; height:20px; background-color: #FFD166">
+                Main Camera Zoom Z(+) X(-) Reset(R) : <b><span id="mcWidthID">t</span></b> 
+            </div>
+            <div style="color: white; position: absolute; left: 15px; top: 110px; width:625px; height:20px; background-color: #FFD166">
+                Main Camera Postion X: <b><span id="mcXposID">t</span></b> Y: <b><span id="mcYposID">t</span></b> 
+            </div>
+            
+    </body>
+    <p><span id="testID">t</span></b></p>
+</html>
