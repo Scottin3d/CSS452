@@ -29,10 +29,6 @@ function SpriteSource() {
     this.mBorderBot = null;
 }
 
-/**
- * Public Methods
- */
-// trying to pass image...
 SpriteSource.prototype.draw = function (option, vpMatrix) {
 
     if (option === 1) {
@@ -110,14 +106,14 @@ SpriteSource.prototype._initSprite = function () {
     // switch to globlal
     // this.mMinionSprite = new SpriteRenderable(this.minionSprite);
     this.mMinionSprite = new SpriteRenderable(minionSprite);
-    this.mMinionSprite.setColor([1, 1, 1, 0]);                          // color overlay
-    this.mMinionSprite.getXform().setPosition(60, 40);                  // camera
+    this.mMinionSprite.setColor([1, 1, 1, 0]);                                  // color overlay
+    this.mMinionSprite.getXform().setPosition(60, 40);                          // camera
     this.mMinionSprite.getXform().setSize(140, 80);
 }
 
 SpriteSource.prototype._initImg = function () {
     this.mFontImage = new SpriteRenderable(this.kFontImage);
-    this.mFontImage.setColor([1, 1, 1, 0]);                             // color overlay
+    this.mFontImage.setColor([1, 1, 1, 0]);                                     // color overlay
     this.mFontImage.getXform().setPosition(60, 40);
     this.mFontImage.getXform().setSize(130, 130);
 }
@@ -144,20 +140,22 @@ SpriteSource.prototype._initCornorSq = function () {
 
 SpriteSource.prototype._initLineBorder = function () {
     this.mBorderTop = new Renderable(this.mConstColorShader);
-    this.mBorderTop.setColor([0, 0, 0, 1]);
     this.mBorderTop.getXform().setSize(0.3, 0.3);
 
     this.mBorderLeft = new Renderable(this.mConstColorShader);
-    this.mBorderLeft.setColor([1, 1, 1, 1]);
     this.mBorderLeft.getXform().setSize(0.3, 0.3);
 
     this.mBorderRight = new Renderable(this.mConstColorShader);
-    this.mBorderRight.setColor([0, 0, 0, 1]);
     this.mBorderRight.getXform().setSize(0.3, 0.3);
 
     this.mBorderBot = new Renderable(this.mConstColorShader);
-    this.mBorderBot.setColor([0, 0, 0, 1]);
     this.mBorderBot.getXform().setSize(0.3, 0.3);
+    
+    var c = hexToRgb("FFFFFF");
+    this.mBorderTop.setColor([c.r, c.g, c.b, c.a]);
+    this.mBorderLeft.setColor([c.r, c.g, c.b, c.a]);
+    this.mBorderRight.setColor([c.r, c.g, c.b, c.a]);
+    this.mBorderBot.setColor([c.r, c.g, c.b, c.a]);
 }
 
 

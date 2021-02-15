@@ -1,9 +1,4 @@
-/*
- * File: InteractiveObject.js
- *  
- * Texture objects where texture coordinate can change
- */
-// Constructor and object definition
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function InteractiveObject() {
@@ -49,7 +44,7 @@ InteractiveObject.prototype.draw = function (option, vpMatrix) {
 InteractiveObject.prototype.initialize = function (option, xPos, yPos, w, h) {
     if (option === 1) {
         // Init Bound
-        this._initBound();
+        this._initBound(xPos, yPos, w, h);
         // Init 4 corner square
         this._initBoundarySq();
         // set boundary for the marker
@@ -65,7 +60,7 @@ InteractiveObject.prototype.initialize = function (option, xPos, yPos, w, h) {
 //---get-fucntions
 InteractiveObject.prototype.getBoundXForm = function () {
     return this.mBoundImage.getXform();
-}
+};
 
 InteractiveObject.prototype.getBound = function () {
     return this.mBoundImage;
@@ -99,11 +94,11 @@ InteractiveObject.prototype.getAllSqXForm = function () {
 //---set-functions
 InteractiveObject.prototype.incBoundXPos = function (delta) {
     this.mBoundImage.getXform().incXPosBy(delta);
-}
+};
 
 InteractiveObject.prototype.incBoundYPos = function (delta) {
     this.mBoundImage.getXform().incYPosBy(delta);
-}
+};
 
 InteractiveObject.prototype.incBoundSize = function (delta) {
     if (this.mBoundImage.getXform().getWidth() > 0) {
@@ -116,7 +111,7 @@ InteractiveObject.prototype.incBoundSize = function (delta) {
         this.mBoundImage.getXform().incSizeBy(delta);
         return;
     }
-}
+};
 
 InteractiveObject.prototype.setBoundHeight = function (delta) {
     if (this.mBoundImage.getXform().getHeight() > 0) {
@@ -129,9 +124,7 @@ InteractiveObject.prototype.setBoundHeight = function (delta) {
         this.mBoundImage.getXform().incHeightBy(delta);
         return;
     }
-}
-
-
+};
 InteractiveObject.prototype.setBoundWidth = function (delta) {
     if (this.mBoundImage.getXform().getWidth() > 0) {
         this.mBoundImage.getXform().incWidthBy(delta);
@@ -143,16 +136,16 @@ InteractiveObject.prototype.setBoundWidth = function (delta) {
         this.mBoundImage.getXform().incWidthBy(delta);
         return;
     }
-}
+};
 
 //---boundary-of-movable-object
-InteractiveObject.prototype._initBound = function () {
+InteractiveObject.prototype._initBound = function (xPos,yPos, w, h) {
     this.mBoundImage = new SpriteRenderable(boundSprite);
     var c = hexToRgb("FFFFFF");
     this.mBoundImage.setColor([c.r, c.g, c.b, c.a]);
-    this.mBoundImage.getXform().setPosition(60, 42);
-    this.mBoundImage.getXform().setSize(28, 25);
-}
+    this.mBoundImage.getXform().setPosition(xPos, yPos);
+    this.mBoundImage.getXform().setSize(w, h);
+};
 
 InteractiveObject.prototype._initBoundOnly = function (xPos, yPos, w, h) {
     this.mBoundImage = new SpriteRenderable(boundSprite);
@@ -160,7 +153,7 @@ InteractiveObject.prototype._initBoundOnly = function (xPos, yPos, w, h) {
     this.mBoundImage.setColor([c.r, c.g, c.b, c.a]);
     this.mBoundImage.getXform().setPosition(xPos, yPos);
     this.mBoundImage.getXform().setSize(w, h);
-}
+};
 
 InteractiveObject.prototype._initBoundarySq = function () {
     var c = hexToRgb("FFD500");
@@ -195,7 +188,7 @@ InteractiveObject.prototype._initBoundarySq = function () {
     this.bottomSquareCC = new Renderable(this.mConstColorShader);
     this.bottomSquareCC.setColor([c.r, c.g, c.b, c.a]);
     this.bottomSquareCC.getXform().setSize(1, 1);
-}
+};
 
 InteractiveObject.prototype._setBoundSqPos = function (xForm, xPos, yPos) {
     var halfXLen = xForm.getWidth() / 2;
@@ -208,5 +201,5 @@ InteractiveObject.prototype._setBoundSqPos = function (xForm, xPos, yPos) {
     this.leftSquareCC.getXform().setPosition(xPos - halfXLen, yPos);
     this.bottomSquare.getXform().setPosition(xPos, yPos - halfYLen);
     this.bottomSquareCC.getXform().setPosition(xPos, yPos - halfYLen);
-}
+};
 

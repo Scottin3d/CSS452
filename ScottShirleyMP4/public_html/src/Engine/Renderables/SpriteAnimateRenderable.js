@@ -1,10 +1,3 @@
-/*
- * File: SpriteAnimateRenderable.js
- */
-
-/*jslint node: true, vars: true */
-/*global gEngine: false, Renderable: false, TextureRenderable: false, SpriteRenderable: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
 
 // Constructor and object definition
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
@@ -54,17 +47,21 @@ SpriteAnimateRenderable.prototype._initAnimation = function () {
     this._setSpriteElement();
 };
 
+SpriteAnimateRenderable.prototype.GetCurrentSpriteStats = function () {
+    return {
+        "first element" : this.mFirstElmLeft, 
+        "element top" : this.mElmTop,
+        "element width": this.mElmWidth,
+        "element height" : this.mElmHeight,
+        "element padding" : this.mWidthPadding,
+        "number of elements" : this.mNumElems};
+};
+
 SpriteAnimateRenderable.prototype._setSpriteElement = function () {
     var left = this.mFirstElmLeft + (this.mCurrentElm * (this.mElmWidth + this.mWidthPadding));
     SpriteRenderable.prototype.setElementUVCoordinate.call(this, left, left + this.mElmWidth,
                                         this.mElmTop - this.mElmHeight, this.mElmTop);
 };
-
-
-//<editor-fold desc="Public Methods">
-//**-----------------------------------------
-// Public methods
-//**-----------------------------------------
 
 // Assumption is that the first sprite in an animation is always the left-most element.
 SpriteAnimateRenderable.eAnimationType = Object.freeze({
@@ -103,7 +100,7 @@ SpriteAnimateRenderable.prototype.setSpriteSequenceUV = function (
     elmWidthInUV,
     elmHeightInUV,
     numElements,      // number of elements in sequence
-    wPaddingInUV,  // left/right padding
+    wPaddingInUV  // left/right padding
 ) {
     this.mNumElems = numElements;   // number of elements in animation
     this.mFirstElmLeft = leftUV;
@@ -114,19 +111,19 @@ SpriteAnimateRenderable.prototype.setSpriteSequenceUV = function (
     this._initAnimation();
 };
 
-SpriteAnimateRenderable.prototype.setAnimationSpeed = function (
-    tickInterval   // number of update calls before advancing the animation
-) {
-    this.mUpdateInterval = tickInterval;   // how often to advance
+SpriteAnimateRenderable.prototype.setAnimationSpeed = function (tickInterval){  // number of update calls before advancing the animation
+    this.mUpdateInterval = tickInterval;                                        // how often to advance
 };
 
-SpriteAnimateRenderable.prototype.incAnimationSpeed = function (
-    deltaInterval   // number of update calls before advancing the animation
-) {
+SpriteAnimateRenderable.prototype.incAnimationSpeed = function (deltaInterval){// number of update calls before advancing the animation
     this.mUpdateInterval += deltaInterval;   // how often to advance
 };
 
-SpriteAnimateRenderable.prototype.setAnimationType = function (animationType) {
+SpriteAnimateRenderable.prototype.SetSpeed = function (speed){
+    this.mUpdateInterval = speed;
+};
+
+SpriteAnimateRenderable.prototype.setAnimationType = function (animationType){
     this.mAnimationType = animationType;
     this.mCurrentAnimAdvance = -1;
     this.mCurrentElm = 0;
@@ -145,6 +142,3 @@ SpriteAnimateRenderable.prototype.updateAnimation = function () {
         }
     }
 };
-//--- end of Public Methods
-//
-//</editor-fold>

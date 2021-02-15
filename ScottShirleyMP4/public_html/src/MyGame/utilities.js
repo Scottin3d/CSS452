@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 fontSprite = "assets/Consolas-72.png";
 minionSprite = "assets/minion_sprite.png";
